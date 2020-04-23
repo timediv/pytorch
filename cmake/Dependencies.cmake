@@ -449,11 +449,8 @@ if(USE_XNNPACK)
   list(APPEND Caffe2_DEPENDENCY_LIBS XNNPACK)
 endif()
 
+# ---[ Vulkan GLES deps
 if(USE_VULKAN)
-  # Commenting for prototype, using vulkan_wrapper directly for simplicity of prototype
-  # add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../third_party/Serenity)
-  # list(APPEND Caffe2_DEPENDENCY_LIBS Orion)
-
   if(NOT ANDROID)
     message(FATAL_ERROR "USE_VULKAN currently is supported only for ANDROID")
   endif()
@@ -539,7 +536,13 @@ if(USE_VULKAN)
     include_directories(SYSTEM ${GOOGLE_SHADERC_INCLUDE_DIRS})
     list(APPEND Caffe2_DEPENDENCY_LIBS ${GOOGLE_SHADERC_LIBRARIES})
   endif()
+else()
+  if(USE_GLES)
+    list(APPEND Caffe2_DEPENDENCY_LIBS EGL GLESv3)
+  endif()
 endif()
+
+
 
 # ---[ gflags
 if(USE_GFLAGS)
@@ -1051,10 +1054,6 @@ endif()
 # ---[ Android specific ones
 if(ANDROID)
   list(APPEND Caffe2_DEPENDENCY_LIBS log)
-
-  if(USE_VULKANGL)
-    list(APPEND Caffe2_DEPENDENCY_LIBS EGL GLESv3)
-  endif()
 endif()
 
 # ---[ LLVM

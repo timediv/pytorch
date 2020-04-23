@@ -6,22 +6,22 @@
 namespace at {
 namespace detail {
 
-struct VULKANGuardImpl final : public c10::impl::DeviceGuardImplInterface {
-  VULKANGuardImpl() {}
+struct VulkanGuardImpl final : public c10::impl::DeviceGuardImplInterface {
+  VulkanGuardImpl() {}
 
-  explicit VULKANGuardImpl(DeviceType t) {
-    TORCH_INTERNAL_ASSERT(t == DeviceType::VULKAN);
+  explicit VulkanGuardImpl(DeviceType t) {
+    TORCH_INTERNAL_ASSERT(t == DeviceType::Vulkan);
   }
 
   DeviceType type() const override {
-    return DeviceType::VULKAN;
+    return DeviceType::Vulkan;
   }
   Device exchangeDevice(Device) const override {
     // no-op
-    return Device(DeviceType::VULKAN, -1);
+    return Device(DeviceType::Vulkan, -1);
   }
   Device getDevice() const override {
-    return Device(DeviceType::VULKAN, -1);
+    return Device(DeviceType::Vulkan, -1);
   }
   void setDevice(Device) const override {
     // no-op
@@ -31,12 +31,12 @@ struct VULKANGuardImpl final : public c10::impl::DeviceGuardImplInterface {
   }
   Stream getStream(Device d) const noexcept override {
     // no-op
-    return Stream(Stream::DEFAULT, Device(DeviceType::VULKAN, -1));
+    return Stream(Stream::DEFAULT, Device(DeviceType::Vulkan, -1));
   }
   // NB: These do NOT set the current device
   Stream exchangeStream(Stream s) const noexcept override {
     // no-op
-    return Stream(Stream::DEFAULT, Device(DeviceType::VULKAN, -1));
+    return Stream(Stream::DEFAULT, Device(DeviceType::Vulkan, -1));
   }
   DeviceIndex deviceCount() const noexcept override {
     return 1;
